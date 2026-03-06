@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Symptom Checker</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            text-align:center;
+            background:#f2f2f2;
+        }
+
+        .container{
+            margin-top:80px;
+            background:white;
+            padding:40px;
+            width:400px;
+            margin-left:auto;
+            margin-right:auto;
+            border-radius:10px;
+        }
+
+        input{
+            padding:10px;
+            width:80%;
+            margin:10px;
+        }
+
+        button{
+            padding:10px 20px;
+            background:#007bff;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        #result{
+            margin-top:20px;
+            font-size:20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Symptom Checker</h2>
+
+<p>Enter symptoms separated by commas</p>
+
+<input id="symptoms" placeholder="itching, skin_rash">
+
+<br>
+
+<button onclick="predict()">Predict Disease</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+async function predict(){
+
+    const symptomsInput = document.getElementById("symptoms").value
+
+    const symptoms = symptomsInput.split(",")
+
+    const response = await fetch("http://127.0.0.1:5000/predict", {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            symptoms:symptoms
+        })
+
+    })
+
+    const data = await response.json()
+
+    document.getElementById("result").innerHTML =
+        "Predicted Disease: " + data.predicted_disease
+
+}
+
+</script>
+
+</body>
+
+</html>
