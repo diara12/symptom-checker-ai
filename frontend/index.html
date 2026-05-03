@@ -3,41 +3,249 @@
 
 <head>
     <title>AI Symptom Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        body{
-            font-family: Arial;
-            text-align:center;
-            background:#f2f2f2;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .container{
-            margin-top:80px;
-            background:white;
-            padding:40px;
-            width:400px;
-            margin-left:auto;
-            margin-right:auto;
-            border-radius:10px;
+        body {
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        input{
-            padding:10px;
-            width:80%;
-            margin:10px;
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 48px;
+            width: 100%;
+            max-width: 500px;
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        button{
-            padding:10px 20px;
-            background:#007bff;
-            color:white;
-            border:none;
-            cursor:pointer;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        #result{
-            margin-top:20px;
-            font-size:20px;
+        h2 {
+            font-family: "Playfair Display", serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 36px;
+            margin-bottom: 8px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #718096;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: "Poppins", inherit;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: #f7fafc;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #a0aec0;
+            font-weight: 500;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 6px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .examples {
+            margin-top: 28px;
+            margin-bottom: 24px;
+        }
+
+        .examples-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .example-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            color: #2d3748;
+            border: 2px solid #e2e8f0;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: auto;
+            box-shadow: none;
+            font-family: "Poppins", inherit;
+        }
+
+        .chip:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            font-family: "Poppins", inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-2px);
+        }
+
+        #result {
+            margin-top: 32px;
+            padding: 28px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 2px solid #e6efff;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3748;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 17px;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+            transition: all 0.4s ease;
+            font-family: "Poppins", inherit;
+            animation: resultAppear 0.5s ease-out;
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #result:empty {
+            display: none;
+        }
+
+        #result::before {
+            content: "✨";
+            display: inline-block;
+            margin-right: 12px;
+            font-size: 28px;
+            animation: spin 0.6s ease-out;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg) scale(0);
+            }
+            to {
+                transform: rotate(360deg) scale(1);
+            }
         }
     </style>
 
@@ -46,22 +254,35 @@
 <body>
 
 <div class="container">
+    <h2>AI Symptom Checker</h2>
+    <p class="subtitle">Enter your symptoms separated by commas to get a preliminary health assessment</p>
 
-<h2>AI Symptom Checker</h2>
+    <div class="form-group">
+        <label for="symptoms">Symptoms</label>
+        <input id="symptoms" type="text" placeholder="itching, skin_rash, fever">
+        <p class="help-text">Use underscores for multi-word symptoms (e.g., skin_rash, high_fever)</p>
+    </div>
 
-<p>Enter symptoms separated by commas</p>
+    <div class="examples">
+        <p class="examples-label">Try these examples:</p>
+        <div class="example-chips">
+            <button type="button" class="chip" onclick="setExample('itching, skin_rash, nodal_skin_eruptions')">itching, skin_rash</button>
+            <button type="button" class="chip" onclick="setExample('high_fever, headache, fatigue')">high_fever, headache</button>
+            <button type="button" class="chip" onclick="setExample('muscle_pain, nausea, vomiting')">muscle_pain, nausea</button>
+        </div>
+    </div>
 
-<input id="symptoms" placeholder="itching, skin_rash">
+    <button onclick="predict()">Predict Disease</button>
 
-<br>
-
-<button onclick="predict()">Predict Disease</button>
-
-<div id="result"></div>
-
+    <div id="result"></div>
 </div>
 
 <script>
+
+function setExample(symptoms) {
+    document.getElementById("symptoms").value = symptoms
+    document.getElementById("symptoms").focus()
+}
 
 async function predict(){
 

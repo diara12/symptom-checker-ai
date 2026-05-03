@@ -15,7 +15,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-MODEL_FOLDER = ""
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_FOLDER = BASE_DIR
 
 model_path = os.path.join(MODEL_FOLDER, "disease_model.joblib")
 encoder_path = os.path.join(MODEL_FOLDER, "symptoms_encoder.joblib")
@@ -58,12 +59,19 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    data = request.json
+    data = request.get_json(silent=True) or {}
 
     if "symptoms" not in data:
         return jsonify({"error": "Symptoms not provided"}), 400
 
-    symptoms = data["symptoms"]
+    symptoms = [
+        symptom.strip()
+        for symptom in data["symptoms"]
+        if isinstance(symptom, str) and symptom.strip()
+    ]
+
+    if not symptoms:
+        return jsonify({"error": "Symptoms cannot be empty"}), 400
 
     result = predict_disease(symptoms)
 
